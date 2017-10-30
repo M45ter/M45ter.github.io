@@ -1,8 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2017%2F10%2F27%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
-  </entry>
+<search> 
+  
+    
+    <entry>
+      <title><![CDATA[Android输入法回车键自定义字符问题]]></title>
+      <url>/2016/09/30/Android%E8%BE%93%E5%85%A5%E6%B3%95%E5%9B%9E%E8%BD%A6%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E9%97%AE%E9%A2%98/</url>
+      <content type="html"><![CDATA[<h3 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h3><p>某个EditText编辑时，软键盘的回车键显示“登录”，点击以后可以执行登录的操作。<br>布局中的EditText:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">EditText</span></span></div><div class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">"@+id/password"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:hint</span>=<span class="string">"@string/prompt_password"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:imeActionId</span>=<span class="string">"@+id/login"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:imeActionLabel</span>=<span class="string">"@string/action_sign_in"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:imeOptions</span>=<span class="string">"actionDone"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:inputType</span>=<span class="string">"textPassword"</span></span></div><div class="line"><span class="tag">    <span class="attr">android:singleLine</span>=<span class="string">"true"</span> /&gt;</span></div></pre></td></tr></table></figure></p>
+<p>代码中监听处理该EditText变化代码:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">etPassword.setOnEditorActionListener(<span class="keyword">new</span> TextView.OnEditorActionListener() &#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onEditorAction</span><span class="params">(TextView textView, <span class="keyword">int</span> id, KeyEvent keyEvent)</span> </span>&#123;</div><div class="line">        ZLog.d(<span class="string">"onEditorAction id = "</span> + id);</div><div class="line">        ZLog.d(<span class="string">"onEditorAction R.id.login = "</span> + R.id.login);</div><div class="line">        <span class="keyword">if</span> (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) &#123;</div><div class="line">            ZLog.d(<span class="string">"onEditorAction in if"</span>);</div><div class="line">            attemptLogin();</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>测试部分系统表现如预期，但是也有部分系统回车字符确实变成了“登录”，然而点击后无作用，通过log看到<code>onEditorAction</code>中的<code>id</code>为0（<code>EditorInfo.IME_ACTION_UNSPECIFIED</code>）而不是预期的6（<code>EditorInfo.IME_ACTION_DONE</code>）<br>猜测是不同系统版本EditText的代码略有不同导致的问题。</p>
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><p>在EditText监听前，用代码再加一下改变回车键字符和执行的Action的代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">etPassword.setImeActionLabel(getString(R.string.action_sign_in), EditorInfo.IME_ACTION_DONE);</div><div class="line">etPassword.setOnEditorActionListener(<span class="keyword">new</span> TextView.OnEditorActionListener() &#123;</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>修改以后再测试点击回车键都正确触发了id为<code>EditorInfo.IME_ACTION_DONE</code>的事件，执行了预期的代码流程。</p>
+<h3 id="第三方输入法"><a href="#第三方输入法" class="headerlink" title="第三方输入法"></a>第三方输入法</h3><p>在某些第三方输入法上（比如搜狗）回车键无法修改成我们需要的自定义字符，如有方法请留言告知下，谢谢！</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 输入法 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Android实现开机自启动]]></title>
+      <url>/2016/09/27/Android%E5%AE%9E%E7%8E%B0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8/</url>
+      <content type="html"><![CDATA[<h3 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h3><p>有时我们会想在android设备启动的时候就在自己的app中执行某些代码（比如启动某些service，记录某些数据等）</p>
+<h3 id="1-在AndroidManifest-xml中注册广播接收器，加上接收广播的权限"><a href="#1-在AndroidManifest-xml中注册广播接收器，加上接收广播的权限" class="headerlink" title="1.在AndroidManifest.xml中注册广播接收器，加上接收广播的权限"></a>1.在<code>AndroidManifest.xml</code>中注册广播接收器，加上接收广播的权限</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">"android.permission.RECEIVE_BOOT_COMPLETED"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">"BootBroadcastReceiver"</span> &gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.BOOT_COMPLETED"</span> /&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span></div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="2-在广播接收器的onReceive方法中写执行代码"><a href="#2-在广播接收器的onReceive方法中写执行代码" class="headerlink" title="2.在广播接收器的onReceive方法中写执行代码"></a>2.在广播接收器的<code>onReceive</code>方法中写执行代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BootBroadcastReceiver</span> <span class="keyword">extends</span> <span class="title">BroadcastReceiver</span> </span>&#123;</div><div class="line"></div><div class="line">	<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String TAG = <span class="string">"BootBroadcastReceiver"</span>;</div><div class="line"></div><div class="line">	<span class="meta">@Override</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onReceive</span><span class="params">(Context context, Intent intent)</span> </span>&#123;</div><div class="line">		<span class="comment">// TODO Auto-generated method stub</span></div><div class="line">		String action = intent.getAction();</div><div class="line">		Log.d(TAG, <span class="string">"onReceive action = "</span> + action);</div><div class="line">		Intent bootIntent = <span class="keyword">new</span> Intent(context, MainActivity.class);</div><div class="line">		bootIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</div><div class="line">		context.startActivity(bootIntent);</div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="当然有些厂家对开机自启动有权限管理，要打开权限才能执行。"><a href="#当然有些厂家对开机自启动有权限管理，要打开权限才能执行。" class="headerlink" title="当然有些厂家对开机自启动有权限管理，要打开权限才能执行。"></a>当然有些厂家对开机自启动有权限管理，要打开权限才能执行。</h3>]]></content>
+      
+        <categories>
+            
+            <category> Android </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
+            
+            <tag> 自启动 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+  
+  
+    
+    <entry>
+      <title><![CDATA[categories]]></title>
+      <url>/categories/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[tags]]></title>
+      <url>/tags/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+  
 </search>
