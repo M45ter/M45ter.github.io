@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[Android输入法回车键自定义字符问题]]></title>
-    <url>%2F2016%2F09%2F30%2FAndroid%E8%BE%93%E5%85%A5%E6%B3%95%E5%9B%9E%E8%BD%A6%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E9%97%AE%E9%A2%98%2F</url>
+    <url>%2FBlog%2F2016%2F09%2F30%2FAndroid%E8%BE%93%E5%85%A5%E6%B3%95%E5%9B%9E%E8%BD%A6%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[期望某个EditText编辑时，软键盘的回车键显示“登录”，点击以后可以执行登录的操作。布局中的EditText:12345678910&lt;EditText android:id="@+id/password" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/prompt_password" android:imeActionId="@+id/login" android:imeActionLabel="@string/action_sign_in" android:imeOptions="actionDone" android:inputType="textPassword" android:singleLine="true" /&gt; 代码中监听处理该EditText变化代码:123456789101112etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() &#123; @Override public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) &#123; ZLog.d("onEditorAction id = " + id); ZLog.d("onEditorAction R.id.login = " + R.id.login); if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) &#123; ZLog.d("onEditorAction in if"); attemptLogin(); return true; &#125; return false; &#125; 问题测试部分系统表现如预期，但是也有部分系统回车字符确实变成了“登录”，然而点击后无作用，通过log看到onEditorAction中的id为0（EditorInfo.IME_ACTION_UNSPECIFIED）而不是预期的6（EditorInfo.IME_ACTION_DONE）猜测是不同系统版本EditText的代码略有不同导致的问题。 修改在EditText监听前，用代码再加一下改变回车键字符和执行的Action的代码123etPassword.setImeActionLabel(getString(R.string.action_sign_in), EditorInfo.IME_ACTION_DONE);etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() &#123;... 修改以后再测试点击回车键都正确触发了id为EditorInfo.IME_ACTION_DONE的事件，执行了预期的代码流程。 第三方输入法在某些第三方输入法上（比如搜狗）回车键无法修改成我们需要的自定义字符，如有方法请留言告知下，谢谢！]]></content>
       <categories>
         <category>Android</category>
@@ -14,7 +14,7 @@
   </entry>
   <entry>
     <title><![CDATA[Android实现开机自启动]]></title>
-    <url>%2F2016%2F09%2F27%2FAndroid%E5%AE%9E%E7%8E%B0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%2F</url>
+    <url>%2FBlog%2F2016%2F09%2F27%2FAndroid%E5%AE%9E%E7%8E%B0%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8%2F</url>
     <content type="text"><![CDATA[目的有时我们会想在android设备启动的时候就在自己的app中执行某些代码（比如启动某些service，记录某些数据等） 1.在AndroidManifest.xml中注册广播接收器，加上接收广播的权限1234567&lt;uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /&gt;&lt;receiver android:name="BootBroadcastReceiver" &gt; &lt;intent-filter&gt; &lt;action android:name="android.intent.action.BOOT_COMPLETED" /&gt; &lt;/intent-filter&gt;&lt;/receiver&gt; 2.在广播接收器的onReceive方法中写执行代码123456789101112131415public class BootBroadcastReceiver extends BroadcastReceiver &#123; private final static String TAG = "BootBroadcastReceiver"; @Override public void onReceive(Context context, Intent intent) &#123; // TODO Auto-generated method stub String action = intent.getAction(); Log.d(TAG, "onReceive action = " + action); Intent bootIntent = new Intent(context, MainActivity.class); bootIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); context.startActivity(bootIntent); &#125;&#125; 当然有些厂家对开机自启动有权限管理，要打开权限才能执行。]]></content>
       <categories>
         <category>Android</category>
@@ -26,12 +26,12 @@
   </entry>
   <entry>
     <title><![CDATA[categories]]></title>
-    <url>%2Fcategories%2Findex.html</url>
+    <url>%2FBlog%2Fcategories%2Findex.html</url>
     <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[tags]]></title>
-    <url>%2Ftags%2Findex.html</url>
+    <url>%2FBlog%2Ftags%2Findex.html</url>
     <content type="text"></content>
   </entry>
 </search>
