@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SpringBoot入门 Hello World（1）]]></title>
+    <url>%2F2017%2F11%2F03%2FSpringBoot%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[简介Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。 第一个SpringBoot项目 打开IDEA，File-&gt;New-&gt;Project,选择如图-&gt;Next 根据自己取名填写-&gt;Next 只选择web-&gt;Next 填好项目名字路径-&gt;Finish 完成以后IDEA生成项目，下载依赖库,Springbootdemo1Application就是主程序的入口 运行，赶紧点击Toolbar上的运行按钮试试效果 打开浏览器，输入http://localhost:8080/，然而效果…Hello World!国际惯例，第一次必须要输出！！！打开Springbootdemo1Application，加代码再次运行，刷新浏览器总结比起写SpringMVC，搭建一个SpringBoot项目简直太简单了，不敢相信，只敲了几行代码就看到了web效果，一个配置文件都没写，这就是SpringBoot的魅力！]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>Spring</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android输入法回车键自定义字符问题]]></title>
     <url>%2F2016%2F09%2F30%2FAndroid%E8%BE%93%E5%85%A5%E6%B3%95%E5%9B%9E%E8%BD%A6%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E7%AC%A6%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[期望某个EditText编辑时，软键盘的回车键显示“登录”，点击以后可以执行登录的操作。布局中的EditText:12345678910&lt;EditText android:id="@+id/password" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="@string/prompt_password" android:imeActionId="@+id/login" android:imeActionLabel="@string/action_sign_in" android:imeOptions="actionDone" android:inputType="textPassword" android:singleLine="true" /&gt; 代码中监听处理该EditText变化代码:123456789101112etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() &#123; @Override public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) &#123; ZLog.d("onEditorAction id = " + id); ZLog.d("onEditorAction R.id.login = " + R.id.login); if (id == R.id.login || id == EditorInfo.IME_ACTION_DONE) &#123; ZLog.d("onEditorAction in if"); attemptLogin(); return true; &#125; return false; &#125; 问题测试部分系统表现如预期，但是也有部分系统回车字符确实变成了“登录”，然而点击后无作用，通过log看到onEditorAction中的id为0（EditorInfo.IME_ACTION_UNSPECIFIED）而不是预期的6（EditorInfo.IME_ACTION_DONE）猜测是不同系统版本EditText的代码略有不同导致的问题。 修改在EditText监听前，用代码再加一下改变回车键字符和执行的Action的代码123etPassword.setImeActionLabel(getString(R.string.action_sign_in), EditorInfo.IME_ACTION_DONE);etPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() &#123;... 修改以后再测试点击回车键都正确触发了id为EditorInfo.IME_ACTION_DONE的事件，执行了预期的代码流程。 第三方输入法在某些第三方输入法上（比如搜狗）回车键无法修改成我们需要的自定义字符，如有方法请留言告知下，谢谢！]]></content>
