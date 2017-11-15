@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[SpringBoot入门 Hello World（1）]]></title>
+    <title><![CDATA[SpringBoot入门（1）：Hello World]]></title>
     <url>%2F2017%2F11%2F03%2FSpringBoot%E5%85%A5%E9%97%A8%EF%BC%881%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[简介Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。 第一个SpringBoot项目 打开IDEA，File-&gt;New-&gt;Project,选择如图-&gt;Next 根据自己取名填写-&gt;Next 只选择web-&gt;Next 填好项目名字路径-&gt;Finish 完成以后IDEA生成项目，下载依赖库,Springbootdemo1Application就是主程序的入口 运行，赶紧点击Toolbar上的运行按钮试试效果 打开浏览器，输入http://localhost:8080/，然而效果…Hello World!国际惯例，第一次必须要输出！！！打开Springbootdemo1Application，加代码再次运行，刷新浏览器总结比起写SpringMVC，搭建一个SpringBoot项目简直太简单了，不敢相信，只敲了几行代码就看到了web效果，一个配置文件都没写，这就是SpringBoot的魅力！]]></content>
+    <content type="text"><![CDATA[简介Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来简化新Spring应用的初始搭建以及开发过程。该框架使用了特定的方式来进行配置，从而使开发人员不再需要定义样板化的配置。通过这种方式，Spring Boot致力于在蓬勃发展的快速应用开发领域(rapid application development)成为领导者。 第一个SpringBoot项目 打开IDEA，File-&gt;New-&gt;Project,选择如图-&gt;Next 根据自己取名填写-&gt;Next 只选择web-&gt;Next 填好项目名字路径-&gt;Finish 完成以后IDEA生成项目，下载依赖库,Springbootdemo1Application就是主程序的入口 运行，赶紧点击Toolbar上的运行按钮试试效果 打开浏览器，输入http://localhost:8080/，然而效果…Hello World!国际惯例，第一次必须要输出！！！打开Springbootdemo1Application，加代码再次运行，刷新浏览器总结比起写SpringMVC，搭建一个SpringBoot项目简直太简单了，不敢相信，只敲了几行代码就看到了web效果，一个配置文件都没写，这就是SpringBoot的魅力！ 源码地址:https://github.com/M45ter/LearnSpringBoot/tree/master/springbootdemo1]]></content>
       <categories>
         <category>SpringBoot</category>
       </categories>
@@ -38,13 +38,13 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[categories]]></title>
-    <url>%2Fcategories%2Findex.html</url>
+    <title><![CDATA[tags]]></title>
+    <url>%2Ftags%2Findex.html</url>
     <content type="text"></content>
   </entry>
   <entry>
-    <title><![CDATA[tags]]></title>
-    <url>%2Ftags%2Findex.html</url>
+    <title><![CDATA[categories]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"></content>
   </entry>
 </search>
